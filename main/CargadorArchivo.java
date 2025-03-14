@@ -105,8 +105,4 @@ public class CargadorArchivo {
         }
     }
 
-    public static void main(String[] args) {
-        InterpreteLisp interprete = new InterpreteLisp();
-        interprete.cargarArchivo("C://Users/males/OneDrive/Escritorio/programas 2/Fase2Lisp/main/prueba.txt"); 
-    }
 }

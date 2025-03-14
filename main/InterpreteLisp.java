@@ -1,4 +1,3 @@
-
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -21,5 +20,11 @@ public class InterpreteLisp {
 
     public String popOperacion() {
         return pilaOperaciones.pop();
+    }
+
+    public static void main(String[] args) {
+        InterpreteLisp interprete = new InterpreteLisp();
+        CargadorArchivo cargador = new CargadorArchivo(); // Instancia de la clase CargadorArchivo
+        cargador.cargarArchivo("C://Users/males/OneDrive/Escritorio/programas 2/Fase2Lisp/main/prueba.txt"); 
     }
 }
