@@ -6,18 +6,15 @@ public class ExFunciones {
     private Funciones funcion;
     private List<Expresion> argumentos;
 
-    // Constructor
     public ExFunciones(Funciones funcion) {
         this.funcion = funcion;
         this.argumentos = new ArrayList<>();
     }
 
-    // Agrega un argumento a la lista de argumentos
     public void agregarArgumento(Expresion expr) {
         argumentos.add(expr);
     }
 
-    // Verifica que los argumentos sean válidos antes de evaluar
     public boolean verificar() {
         if (funcion == null) {
             System.out.println("Error: La función no está definida.");
@@ -37,6 +34,6 @@ public class ExFunciones {
         if (!verificar()) {
             throw new IllegalArgumentException("No se puede evaluar la función debido a argumentos inválidos.");
         }
-        return funcion.evaluar(argumentos);
+        return funcion.invocar(argumentos);
     }
 }

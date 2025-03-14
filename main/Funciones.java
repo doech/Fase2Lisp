@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Funciones {
 
     private String nombreFuncion;   
@@ -34,15 +36,15 @@ public class Funciones {
         this.cuerpo = cuerpo;
     }
 
-    public String invocar(String[] argumentos) {
-        if (argumentos.length != parametros.length) {
+    public String invocar(List<Expresion> argumentos) {
+        if (argumentos.size() != parametros.length) {
             return "Error: número incorrecto de argumentos.";
         }
     
         String resultado = "Invocando la función: " + nombreFuncion + "\n";
     
         for (int i = 0; i < parametros.length; i++) {
-            resultado += parametros[i] + " = " + argumentos[i] + "\n";
+            resultado += parametros[i] + " = " + argumentos.get(i).evaluar() + "\n";
         }
     
         resultado += "Ejecutando el cuerpo de la función: " + cuerpo + "\n";
