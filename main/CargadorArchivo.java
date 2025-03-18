@@ -20,7 +20,7 @@ public class CargadorArchivo {
 
     public void cargar(String entrada) {
         entrada = entrada.trim();
-        String[] tokens = entrada.split("\\s+"); // separa por espacios
+        String[] tokens = entrada.split("\\s+");
         if (tokens.length == 0) {
             System.out.println("Entrada vacía");
             return;
@@ -38,11 +38,11 @@ public class CargadorArchivo {
                     for (int i = 0; i < parametros.length; i++) {
                         parametros[i] = tokens[i + 2];
                     }
-                    String cuerpoFuncion = tokens[tokens.length - 1]; // Cuerpo de la función
+                    String cuerpoFuncion = tokens[tokens.length - 1]; 
 
-                    Funciones nuevaFuncion = new Funciones(nombre, parametros, cuerpoFuncion); // Creas la función
+                    Funciones nuevaFuncion = new Funciones(nombre, parametros, cuerpoFuncion); 
                     ExFunciones exFuncion = new ExFunciones(nuevaFuncion);
-                    funciones.put(nombre, exFuncion); // Almacenas la función
+                    funciones.put(nombre, exFuncion); 
                     System.out.println("Función definida: " + nombre);
                 }
                 break;
@@ -68,7 +68,7 @@ public class CargadorArchivo {
             if (tokens.length < 3) {
                 System.out.println("Error de sintaxis en cond");
             } else {
-                Expresion condicional = new ExCond(entrada);
+                Expresion condicional = new ExCondicion(entrada);
                 System.out.println("Resultado:" + condicional.evaluar());
             }
             break;
@@ -93,7 +93,7 @@ public class CargadorArchivo {
             if (tokens.length != 3) {
                 System.out.println("Error de sintaxis en " + operador);
             } else {
-                Expresion operacion = new ExOperacion(entrada);
+                Expresion operacion = new ExAritmeticas(entrada);
                 System.out.println("Resultado: " + operacion.evaluar());
             }
             break; 

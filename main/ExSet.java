@@ -1,4 +1,4 @@
-class ExSet implements Expresion {
+public class ExSet extends Expresion {
     private String nombreVariable;
     private Expresion nuevoValor;
     private InterpreteLisp interprete;
@@ -22,27 +22,4 @@ class ExSet implements Expresion {
     }
 }
 
-class ExFunciones implements Expresion {
-    private Funciones funcion;
-    private List<Expresion> argumentos = new ArrayList<>();
-
-    public ExFunciones(Funciones funcion) {
-        this.funcion = funcion;
-    }
-
-    public void agregarArgumento(Expresion expr) {
-        argumentos.add(expr);
-    }
-
-    @Override
-    public String evaluar() {
-        String[] args = argumentos.stream().map(Expresion::evaluar).toArray(String[]::new);
-        return funcion.invocar(args);
-    }
-
-    @Override
-    public boolean verificar() {
-        return !argumentos.isEmpty();
-    }
-}
 

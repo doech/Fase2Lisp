@@ -1,4 +1,4 @@
-class ExCondicion implements Expresion {
+public class ExCondicion extends Expresion {
     private Expresion condicion;
     private Expresion siTrue;
     private Expresion siFalse;

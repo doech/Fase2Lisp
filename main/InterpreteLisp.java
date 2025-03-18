@@ -4,7 +4,7 @@ import java.util.Stack;
 public class InterpreteLisp {
     public HashMap<String, String> variables = new HashMap<>();
     public Stack<String> pilaOperaciones = new Stack<>();
-    public HashMap<String, ExFunciones> funciones = new HashMap<>(); // Almacena funciones
+    public HashMap<String, ExFunciones> funciones = new HashMap<>();
 
     public void definirVariable(String nombre, String valor) {
         variables.put(nombre, valor);
@@ -24,7 +24,7 @@ public class InterpreteLisp {
 
     public static void main(String[] args) {
         InterpreteLisp interprete = new InterpreteLisp();
-        CargadorArchivo cargador = new CargadorArchivo(); // Instancia de la clase CargadorArchivo
+        CargadorArchivo cargador = new CargadorArchivo(); 
         cargador.cargarArchivo("C://Users/males/OneDrive/Escritorio/programas 2/Fase2Lisp/main/prueba.txt"); 
     }
 }

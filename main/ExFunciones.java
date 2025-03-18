@@ -2,7 +2,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExFunciones {
+public class ExFunciones extends Expresion {
     private Funciones funcion;
     private List<Expresion> argumentos;
 
@@ -15,6 +15,7 @@ public class ExFunciones {
         argumentos.add(expr);
     }
 
+    @Override
     public boolean verificar() {
         if (funcion == null) {
             System.out.println("Error: La función no está definida.");
@@ -29,11 +30,11 @@ public class ExFunciones {
         return true;
     }
 
-    // Evalúa la función con los argumentos almacenados
-    public double evaluar() {
+    @Override
+    public String evaluar() {
         if (!verificar()) {
-            throw new IllegalArgumentException("No se puede evaluar la función debido a argumentos inválidos.");
+            return "Error: No se puede evaluar la función debido a argumentos inválidos.";
         }
-        return funcion.invocar(argumentos);
+        return String.valueOf(funcion.invocar(argumentos));
     }
 }
