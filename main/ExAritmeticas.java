@@ -1,25 +1,33 @@
-
 public class ExAritmeticas extends Expresion {
     private Expresion operandoIz;
     private Expresion operandoDe;
-    private String operador;
+    private String operadorAritmetico;
 
-    public ExAritmeticas(Expresion operandoIz, Expresion operandoDe, String operador) {
+    public ExAritmeticas(Expresion operandoIz, Expresion operandoDe, String operadorAritmetico) {
         this.operandoIz = operandoIz;
         this.operandoDe = operandoDe;
-        this.operador = operador;
+        this.operadorAritmetico = operadorAritmetico;
     }
 
     @Override
     public String evaluar() {
         int izq = Integer.parseInt(operandoIz.evaluar());
         int der = Integer.parseInt(operandoDe.evaluar());
-        switch (operador) {
-            case "+": return String.valueOf(izq + der);
-            case "-": return String.valueOf(izq - der);
-            case "*": return String.valueOf(izq * der);
-            case "/": return der != 0 ? String.valueOf(izq / der) : "Error";
-            default: return "Error";
+
+        switch (operadorAritmetico) {
+            case "/":
+                if (der == 0) {
+                    return "Error: División por cero";
+                }
+                return String.valueOf(izq / der);
+            case "+":
+                return String.valueOf(izq + der);
+            case "-":
+                return String.valueOf(izq - der);
+            case "*":
+                return String.valueOf(izq * der);
+            default:
+                return "Error: Operador no válido";
         }
     }
 

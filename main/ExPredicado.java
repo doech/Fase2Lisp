@@ -18,34 +18,27 @@ public class ExPredicado extends Expresion {
     @Override
     public String evaluar() {
         if (argumentos.size() != 2) {
-            return "Error: El predicado necesita 2 argumentos";
+            return "Error: El predicado necesita exactamente 2 argumentos";
         }
     
         String arg1 = argumentos.get(0);
         String arg2 = argumentos.get(1);
+    
+        // Intentamos obtener el valor de las variables si no son números directos
+        arg1 = obtenerValorSiEsVariable(arg1);
+        arg2 = obtenerValorSiEsVariable(arg2);
+    
         if (esNumerico(arg1) && esNumerico(arg2)) {
-            int num1 = Integer.parseInt(arg1);
-            int num2 = Integer.parseInt(arg2);
+            double num1 = Double.parseDouble(arg1);
+            double num2 = Double.parseDouble(arg2);
     
             switch (operador) {
                 case ">":
-                    if (num1 > num2) {
-                        return "Mayor";
-                    } else {
-                        return "No mayor";
-                    }
+                    return num1 > num2 ? "Mayor" : "No mayor";
                 case "<":
-                    if (num1 < num2) {
-                        return "Menor";
-                    } else {
-                        return "No menor";
-                    }
+                    return num1 < num2 ? "Menor" : "No menor";
                 case "equal":
-                    if (num1 == num2) {
-                        return "Iguales";
-                    } else {
-                        return "Diferentes";
-                    }
+                    return num1 == num2 ? "Iguales" : "Diferentes";
                 default:
                     return "Error: Operador no reconocido " + operador;
             }
@@ -54,18 +47,27 @@ public class ExPredicado extends Expresion {
         }
     }
     
+
+    // Verifica si una cadena es numérica (permite números negativos y decimales)
     private boolean esNumerico(String str) {
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) < '0' || str.charAt(i) > '9') {
-                return false;  
-            }
+        try {
+            Double.parseDouble(str);  // Intentamos parsear el número a Double
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
-        return true;  
     }
-    
 
     @Override
     public boolean verificar() {
-        return argumentos.size() == 2;
+        // Verificar que haya exactamente 2 argumentos y que ambos sean numéricos
+        if (argumentos.size() != 2) {
+            return false;
+        }
+
+        String arg1 = argumentos.get(0);
+        String arg2 = argumentos.get(1);
+
+        return esNumerico(arg1) && esNumerico(arg2);
     }
 }

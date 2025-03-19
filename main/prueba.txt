@@ -1,1 +1,13 @@
-defun suma (a b) (+ a b)
+(setq x 10)                  
+(setq y 20)                 
+
+(+ x y)                      
+
+(defun suma (a b) (+ a b))    
+(suma 3 4)                
+
+(cond ((> x y) 'mayor) 
+      ((< x y) 'menor))       
+
+(quote (1 2 3))              
+(equal x y)                  

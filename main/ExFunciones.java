@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +8,25 @@ public class ExFunciones extends Expresion {
     public ExFunciones(Funciones funcion) {
         this.funcion = funcion;
         this.argumentos = new ArrayList<>();
+    }
+
+    public ExFunciones(Funciones funcion, String[] args) {
+        this.funcion = funcion;
+        this.argumentos = new ArrayList<>();
+        for (String arg : args) {
+            // Convertir cada argumento en una expresión simple
+            this.argumentos.add(new Expresion() {
+                @Override
+                public String evaluar() {
+                    return arg; // Retorna el valor del argumento como está
+                }
+
+                @Override
+                public boolean verificar() {
+                    return arg != null && !arg.isEmpty(); // Verifica que no sea nulo o vacío
+                }
+            });
+        }
     }
 
     public void agregarArgumento(Expresion expr) {
