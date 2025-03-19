@@ -1,39 +1,93 @@
-public class ExAritmeticas extends Expresion {
-    private Expresion operandoIz;
-    private Expresion operandoDe;
-    private String operadorAritmetico;
+import java.util.HashMap;
 
-    public ExAritmeticas(Expresion operandoIz, Expresion operandoDe, String operadorAritmetico) {
+public class ExAritmeticas extends Expresion {
+    private String operandoIz;
+    private String operandoDe;
+    private String operadorAritmetico;
+    private HashMap<String, String> entornoVariables;
+
+    public ExAritmeticas(String operadorAritmetico, String operandoIz, String operandoDe, HashMap<String, String> entornoVariables) {
+        if (operandoIz == null && operandoDe == null) {
+           System.out.println("los operandos no pueden estar vacíos");
+        }
+        this.operadorAritmetico = operadorAritmetico;
         this.operandoIz = operandoIz;
         this.operandoDe = operandoDe;
-        this.operadorAritmetico = operadorAritmetico;
+        this.entornoVariables = entornoVariables;
     }
 
     @Override
     public String evaluar() {
-        int izq = Integer.parseInt(operandoIz.evaluar());
-        int der = Integer.parseInt(operandoDe.evaluar());
-
-        switch (operadorAritmetico) {
-            case "/":
-                if (der == 0) {
-                    return "Error: División por cero";
-                }
-                return String.valueOf(izq / der);
-            case "+":
-                return String.valueOf(izq + der);
-            case "-":
-                return String.valueOf(izq - der);
-            case "*":
-                return String.valueOf(izq * der);
-            default:
-                return "Error: Operador no válido";
-        }
+    if (!verificar()) {
+        return "Error: Operación aritmética inválida";
     }
+
+    String valorIzq;
+    String valorDer;
+
+    if (entornoVariables.containsKey(operandoIz)) {
+        valorIzq = entornoVariables.get(operandoIz);
+    } else {
+        valorIzq = operandoIz;
+    }
+
+    if (entornoVariables.containsKey(operandoDe)) {
+        valorDer = entornoVariables.get(operandoDe);
+    } else {
+        valorDer = operandoDe;
+    }
+
+    double izq = Double.parseDouble(valorIzq);
+    double der = Double.parseDouble(valorDer);
+    double resultado = 0;
+
+    if (operadorAritmetico.equals("+")) {
+        resultado = izq + der;
+    } else if (operadorAritmetico.equals("-")) {
+        resultado = izq - der;
+    } else if (operadorAritmetico.equals("*")) {
+        resultado = izq * der;
+    } else if (operadorAritmetico.equals("/")) {
+        if (der == 0) {
+            return "Error: División por cero";
+        }
+        resultado = izq / der;
+    } else {
+        return "Error: Operador no válido";
+    }
+
+    return String.valueOf(resultado);
+}
+
 
     @Override
     public boolean verificar() {
-        return operandoIz != null && operandoDe != null;
-    }
-}
+        String valorIzq;
+        String valorDer;
 
+        if (entornoVariables.containsKey(operandoIz)) {
+            valorIzq = entornoVariables.get(operandoIz);
+        } else {
+            valorIzq = operandoIz;
+        }
+
+        if (entornoVariables.containsKey(operandoDe)) {
+            valorDer = entornoVariables.get(operandoDe);
+        } else {
+            valorDer = operandoDe;
+        }
+
+        return esNumerico(valorIzq) && esNumerico(valorDer);
+    }
+
+    private boolean esNumerico(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+
+}

@@ -1,58 +1,32 @@
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ExFunciones extends Expresion {
-    private Funciones funcion;
-    private List<Expresion> argumentos;
+    private String nombreFuncion;
+    private List<String> parametros;
+    private List<Expresion> cuerpo;
+    private HashMap<String, String> contexto;
+    private InterpreteLisp interprete;
 
-    public ExFunciones(Funciones funcion) {
-        this.funcion = funcion;
-        this.argumentos = new ArrayList<>();
+    public ExFunciones(String nombreFuncion, List<String> parametros, List<Expresion> cuerpo, InterpreteLisp interprete) {
+        this.nombreFuncion = nombreFuncion;
+        this.parametros = parametros;
+        this.cuerpo = cuerpo;
+        this.interprete = interprete;
+        this.contexto = new HashMap<>();
     }
 
-    public ExFunciones(Funciones funcion, String[] args) {
-        this.funcion = funcion;
-        this.argumentos = new ArrayList<>();
-        for (String arg : args) {
-            // Convertir cada argumento en una expresión simple
-            this.argumentos.add(new Expresion() {
-                @Override
-                public String evaluar() {
-                    return arg; // Retorna el valor del argumento como está
-                }
-
-                @Override
-                public boolean verificar() {
-                    return arg != null && !arg.isEmpty(); // Verifica que no sea nulo o vacío
-                }
-            });
+    public String invocar(List<String> valores) {
+        if (valores.size() != parametros.size()) {
+            return "Error: número incorrecto de argumentos.";
         }
-    }
-
-    public void agregarArgumento(Expresion expr) {
-        argumentos.add(expr);
-    }
-
-    @Override
-    public boolean verificar() {
-        if (funcion == null) {
-            System.out.println("Error: La función no está definida.");
-            return false;
+        for (int i = 0; i < parametros.size(); i++) {
+            contexto.put(parametros.get(i), valores.get(i));
         }
-        for (Expresion arg : argumentos) {
-            if (arg == null) {
-                System.out.println("Error: Uno de los argumentos es nulo.");
-                return false;
-            }
+        String resultado = "";
+        for (Expresion expresion : cuerpo) {
+            resultado = expresion.evaluar();
         }
-        return true;
-    }
-
-    @Override
-    public String evaluar() {
-        if (!verificar()) {
-            return "Error: No se puede evaluar la función debido a argumentos inválidos.";
-        }
-        return String.valueOf(funcion.invocar(argumentos));
+        return resultado;
     }
 }
