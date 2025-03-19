@@ -23,8 +23,7 @@ public class InterpreteLisp {
     }
 
     public static void main(String[] args) {
-        InterpreteLisp interprete = new InterpreteLisp();
-        CargadorArchivo cargador = new CargadorArchivo(); 
-        cargador.cargarArchivo("C://Users/males/OneDrive/Escritorio/programas 2/Fase2Lisp/main/prueba.txt"); 
+        CargadorArchivo cargador = new CargadorArchivo();
+        cargador.cargarArchivo("C://Users/males/OneDrive/Escritorio/programas 2/Fase2Lisp/main/prueba.txt");
     }
 }
