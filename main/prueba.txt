@@ -1,4 +1,21 @@
-(+ 8 7)
-(- 10 4)
-(* 6 3)
-(/ 3 a)
+(setq a true)         
+(setq b false)         
+(setq x 10)           
+(setq y 20)            
+
+(cond (b "cond b es true") (a "cond a es true"))           
+(cond (z "Z esta definido") (a "cond a es true"))  
+
+(< x y)               
+(> x y)              
+(equal x y)
+
+(quote (1 2 3 4 5))  
+(quote "Hello, World") 
+(quote a) 
+
+(+ x y)
+(- x a)
+
+(defun suma (a b) (+ a b)) 
+(suma x y)

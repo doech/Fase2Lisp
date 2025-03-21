@@ -1,24 +1,28 @@
+import java.util.Map;
+
 public class ExSet extends Expresion {
     private String nombreVariable;
-    private Expresion nuevoValor;
-    private InterpreteLisp interprete;
+    private String nuevoValor;
+    private Map<String, String> entornoVariables;
 
-    public ExSet(String nombreVariable, Expresion nuevoValor, InterpreteLisp interprete) {
+    public ExSet(String nombreVariable, String nuevoValor, Map<String, String> entornoVariables) {
         this.nombreVariable = nombreVariable;
         this.nuevoValor = nuevoValor;
-        this.interprete = interprete;
+        this.entornoVariables = entornoVariables;
     }
 
     @Override
     public String evaluar() {
-        String valor = nuevoValor.evaluar();
-        interprete.definirVariable(nombreVariable, valor);
-        return valor;
+        if (nuevoValor == null || nuevoValor.isEmpty()) {
+            return "Error: Valor no válido";
+        }
+        entornoVariables.put(nombreVariable, nuevoValor);
+        return nuevoValor;
     }
 
     @Override
     public boolean verificar() {
-        return nombreVariable != null && nuevoValor != null;
+        return nombreVariable != null && !nombreVariable.isEmpty() && nuevoValor != null;
     }
 }
 

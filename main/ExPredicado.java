@@ -1,84 +1,56 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class ExPredicado extends Expresion {
     private String operador;
-    private List<String> argumentos;
-    private Map<String, String> entornoVariables; //agregado para poder guardar valores de variables
+    private String operandoIz;
+    private String operandoDe;
+    private Map<String, String> entornoVariables;
 
-    public ExPredicado(String entrada, Map<String, String> entornoVariables) {
-        this.argumentos = new ArrayList<>();
-        this.entornoVariables = entornoVariables; 
-        entrada = entrada.replace("(", "").replace(")", "");
-        String[] tokens = entrada.split("\\s+");
-        this.operador = tokens[0];
-
-        for (int i = 1; i < tokens.length; i++) {
-            argumentos.add(tokens[i]);
-        }
-        System.out.println("Operador: " + operador);
-        System.out.println("Argumentos: " + argumentos);
+    public ExPredicado(String operador, String operandoIz, String operandoDe, Map<String, String> entornoVariables) {
+        this.operador = operador;
+        this.operandoIz = operandoIz;
+        this.operandoDe = operandoDe;
+        this.entornoVariables = entornoVariables;
     }
 
     @Override
     public boolean verificar() {
-        return true; 
+        return operandoIz != null && operandoDe != null;
     }
 
     @Override
     public String evaluar() {
-    if (argumentos.size() < 2) {
-        return "Error: No hay suficientes argumentos";
-    }
-    String arg1 = obtenerValorSiEsVariable(argumentos.get(0));
-    String arg2 = obtenerValorSiEsVariable(argumentos.get(1));
+        String valorIzq;
+        if (entornoVariables.containsKey(operandoIz)) {
+            valorIzq = entornoVariables.get(operandoIz);
+        } else {
+            valorIzq = operandoIz;
+        }
 
-    if (!esNumerico(arg1) || !esNumerico(arg2)) {
-        return "Error: Los argumentos no son numéricos.";
-    }
+        String valorDer;
+        if (entornoVariables.containsKey(operandoDe)) {
+            valorDer = entornoVariables.get(operandoDe);
+        } else {
+            valorDer = operandoDe;
+        }
 
-    double num1 = Double.parseDouble(arg1);
-    double num2 = Double.parseDouble(arg2);
+        double numIzq, numDer;
+        try {
+            numIzq = Double.parseDouble(valorIzq);
+            numDer = Double.parseDouble(valorDer);
+        } catch (NumberFormatException e) {
+            return "Error: Condición no válida en " + operador;
+        }
 
         switch (operador) {
-        case "<":
-            if (num1 < num2) {
-                return "menor";
-            }
-            break;
-        case ">":
-            if (num1 > num2) {
-                return "mayor";
-            }
-            break;
-        case "equal":
-            if (num1 == num2) {
-                return "igual";
-            }
-            break;
-        default:
-            return "Error: Operador no reconocido.";
-    }
-    
-    return "Error: Condición no válida.";
-}
-    //metodo agregado para ver si las variables existen en el hashmap o sea que estan definidas ya
-    private String obtenerValorSiEsVariable(String argumento) {
-        if (entornoVariables.containsKey(argumento)) {
-            return entornoVariables.get(argumento);
-        } else {
-            return argumento;
-        }
-    }
-
-    //como toma la cadena como un string para dividirlo en tokens, se verifica si es numerico
-    private boolean esNumerico(String valor) {
-        try {
-            Double.parseDouble(valor);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+            case "<":
+                return String.valueOf(numIzq < numDer);
+            case ">":
+                return String.valueOf(numIzq > numDer);
+            case "equal":
+                return String.valueOf(numIzq == numDer);
+            default:
+                return "Error: Operador no reconocido - " + operador;
         }
     }
 }
