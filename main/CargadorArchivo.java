@@ -2,19 +2,35 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-
+/**
+ * Clase encargada de cargar y procesar archivos de entrada.
+ * Lee un archivo línea por línea y evalua las expresiones.
+ */
 public class CargadorArchivo {
     private HashMap<String, String> entornoVariables = new HashMap<>(); //creación de hashmap para almacenar variables locales
     private HashMap<String, Funciones> funciones = new HashMap<>(); //creación de hashmap para almacenar funciones definidas}
-   
+    
+      /**
+     * Obtiene el mapa de funciones definidas.
+     * 
+     * @return HashMap con las funciones definidas.
+     */
     public HashMap<String, Funciones> getFunciones() {
         return funciones;
     }
+
+        /**
+     * Obtiene el entorno de variables definidas.
+     */
 
     public HashMap<String, String> getEntornoVariables() {
         return entornoVariables;
     }
 
+        /**
+     * Carga y procesa un archivo línea por línea.
+     * @param archivo Nombre del archivo a cargar.
+     */
     public void cargarArchivo(String archivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
@@ -26,6 +42,10 @@ public class CargadorArchivo {
         }
     }
 
+        /**
+     * Evalúa y procesa una línea de entrada.
+     * @param entrada Línea de código a evaluar.
+     */
     public void cargar(String entrada) {
         entrada = entrada.trim();
         
