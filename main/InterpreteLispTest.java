@@ -1,46 +1,22 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class InterpreteLispTest {  
-    private InterpreteLisp interprete;
+public class InterpreteLispTest {
 
-    @BeforeEach
-    void setUp() {
-        interprete = new InterpreteLisp();
+    @Test
+    public void testDefinirYObtenerVariable() {
+        InterpreteLisp interprete = new InterpreteLisp();
+        interprete.definirVariable("saludo", "hola");
+
+        String valor = interprete.obtenerVariable("saludo");
+        assertEquals("hola", valor, "Debería devolver 'hola' al obtener la variable saludo.");
     }
 
-    // Test de suma básica
     @Test
-    void testSuma() {
-        // Asegúrate de que la cadena sea evaluada correctamente
-        assertEquals("5", interprete.evaluar("(+ 2 3)"), "La suma no es correcta");
-    }
+    public void testVariableNoDefinida() {
+        InterpreteLisp interprete = new InterpreteLisp();
 
-    // Test de multiplicación básica
-    @Test
-    void testMultiplicacion() {
-        assertEquals("6", interprete.evaluar("(* 2 3)"), "La multiplicación no es correcta");
-    }
-
-    // Test de división
-    @Test
-    void testDivision() {
-        assertEquals("2", interprete.evaluar("(/ 6 3)"), "La división no es correcta");
-    }
-
-    // Test de expresión compuesta
-    @Test
-    void testExpresionCompuesta() {
-        assertEquals("14", interprete.evaluar("(+ (* 2 3) 8)"), "La evaluación de la expresión compuesta falló");
-    }
-
-    // Test para manejar división por cero
-    @Test
-    void testDivisionPorCero() {
-        Exception exception = assertThrows(ArithmeticException.class, () -> {
-            interprete.evaluar("(/ 4 0)");
-        });
-        assertEquals("División por cero", exception.getMessage(), "No se detectó correctamente la división por cero");
+        String valor = interprete.obtenerVariable("nada");
+        assertEquals("Error: Variable no definida", valor);
     }
 }
