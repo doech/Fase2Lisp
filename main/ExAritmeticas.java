@@ -1,10 +1,23 @@
 import java.util.HashMap;
 
+/**
+ * Clase que representa una expresión aritmética.
+ * Permite evaluar operaciones matemáticas entre dos operandos.
+ */
 public class ExAritmeticas extends Expresion {
     private String operandoIz;
     private String operandoDe;
     private String operadorAritmetico;
     private HashMap<String, String> entornoVariables;
+
+        /**
+     * Constructor de la clase ExAritmeticas.
+     * 
+     * @param operadorAritmetico Operador matemático (+, -, *, /)
+     * @param operandoIz Operando Iz (variable o un número)
+     * @param operandoDe Operando De (variable o un número)
+     * @param entornoVariables Mapa con variables disponibles en el entorno
+     */
 
     public ExAritmeticas(String operadorAritmetico, String operandoIz, String operandoDe, HashMap<String, String> entornoVariables) {
         this.operadorAritmetico = operadorAritmetico;
@@ -13,8 +26,14 @@ public class ExAritmeticas extends Expresion {
         this.entornoVariables = entornoVariables;
     }
 
+       /**
+     * Evalúa la expresión aritmética y retorna el resultado como una cadena.
+     * 
+     * @return Resultado de la operación o un mensaje de error en caso de fallo.
+     */
     @Override
     public String evaluar() {
+        // Obtiene el valor de los operandos desde el entorno de variables o los usa directamente
         String valorIzq = entornoVariables.get(operandoIz);
         if (valorIzq == null) {
             valorIzq = operandoIz;
@@ -50,6 +69,11 @@ public class ExAritmeticas extends Expresion {
         }
     }
 
+        /**
+     * Verifica si los operandos no son nulos antes de realizar la operación.
+     * 
+     * @return true si los operandos son válidos, false en caso contrario.
+     */
     @Override
     public boolean verificar() {
         return operandoIz != null && operandoDe != null;
