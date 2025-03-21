@@ -1,11 +1,18 @@
 import java.util.Map;
 
+/**
+ * Clase que representa una expresión de predicado en el lenguaje interpretado.
+ * encargado de evaluar comparaciones entre dos operandos.
+ */
 public class ExPredicado extends Expresion {
     private String operador;
     private String operandoIz;
     private String operandoDe;
     private Map<String, String> entornoVariables;
 
+    /**
+     * Constructor de la clase ExPredicado.
+     */
     public ExPredicado(String operador, String operandoIz, String operandoDe, Map<String, String> entornoVariables) {
         this.operador = operador;
         this.operandoIz = operandoIz;
@@ -13,11 +20,18 @@ public class ExPredicado extends Expresion {
         this.entornoVariables = entornoVariables;
     }
 
+    /**
+     * Verifica si los operandos no son nulos.
+     */
     @Override
     public boolean verificar() {
         return operandoIz != null && operandoDe != null;
     }
 
+    /**
+     * Evalúa la expresión de predicado y devuelve el resultado.
+     * @return "true" o "false" según la evaluación de la condición, o un mensaje de error si la condición no es válida.
+     */
     @Override
     public String evaluar() {
         String valorIzq;
@@ -42,6 +56,7 @@ public class ExPredicado extends Expresion {
             return "Error: Condición no válida en " + operador;
         }
 
+        // Evaluar la condición según el operador
         switch (operador) {
             case "<":
                 return String.valueOf(numIzq < numDer);
